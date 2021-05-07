@@ -87,4 +87,4 @@ $ sudo docker run -v path/to/your/keys.toml:/app/keys.toml -v path/to/your/.env:
 ```
 
 Great you now are a mailer pro.
-Good luck mailing peeple!
+Good luck mailing people!
