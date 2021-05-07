@@ -49,4 +49,42 @@ The `Authorization` header has to have the `Bearer` keyword so the end result ne
 Authorization: Bearer random_character_string_you_generate_yourself
 ```
 
-## Deploy (comming soon)
+## Deployment
+
+You can, if you want to (but I wouldn't), run mailer like this:
+```sh
+$ go run main/app.go
+```
+
+or build mailer and run it:
+
+```
+$ go build -o mailer main/app.go
+$ ./mailer
+```
+Also note that if you do this you will probably want a .env file in this repo or adjecent to the executable.
+
+### Docker
+Now for the cool way to run mailer you will use docker.<br>
+Keep in mind when using the docker image that you will need to mount the keys.toml file to `/app/keys.toml`.<br>
+Also keep in mind that in docker you can set the env variables with -e when running or by mounting the .env file to `/app/.env`.<br>
+First of all build the image with:
+
+```sh
+$ make build
+```
+
+Or the more customizable way:
+
+```sh
+$ sudo docker build -t mailer:latest .
+```
+<br>
+After you built the image you can run it in docker:
+
+```sh
+$ sudo docker run -v path/to/your/keys.toml:/app/keys.toml -v path/to/your/.env:/app/.env --network="host" -d mailer:latest
+```
+
+Great you now are a mailer pro.
+Good luck mailing peeple!
