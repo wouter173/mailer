@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -56,6 +57,9 @@ func SendHandler(c *fiber.Ctx) error {
 
 	port, _ := strconv.Atoi(os.Getenv("SMTP_PORT"))
 	dialer := gomail.NewDialer(os.Getenv("SMTP_URI"), port, os.Getenv("EMAIL_ADDRESS"), os.Getenv("EMAIL_PASSWORD"))
+	//this is nasty but for some reason if the server runs in a prod environment it gives a "x509 certificate signed by unknown authority" error.
+	dialer.TLSConfig = &tls.Config{ServerName: os.Getenv("SMTP_URI"), InsecureSkipVerify: true}
+
 	err = dialer.DialAndSend(mail)
 
 	if err != nil {
